@@ -48,7 +48,9 @@ mainContainer.addEventListener("click", function(e){
         header.innerHTML = "<h1>Schedule an Appointment </h1>"
         //how to insert car_id
         mainContainer.innerHTML = 
-        `<form>
+
+        `<div class="col-lg-8 col-md-6 mb-4">
+        <form>
         <div class="form-group">
             <label for="date">Date</label>
             <input type="text" class="form-control" id="date" placeholder="12/10/1997">
@@ -69,7 +71,8 @@ mainContainer.addEventListener("click", function(e){
           <label for="dob">Date of Birth</label>
           <input type="text" class="form-control" id="dob" placeholder="12/10/1997">
         </div>
-      </form>`
+      </form>
+      </div>`
     
     }
 })
@@ -78,19 +81,46 @@ mainContainer.addEventListener("click", function(e){
 
 function carShow(car){
     clearAllCars()
+    let id = car.id
     mainContainer.innerHTML += 
-    `<div class="col-lg-12">
-    <div class="card h-100">
-      <img class="card-img-top" src="${car.image}" alt="">
-      <div class="card-body">
-        <h4 class="card-title">${car.year} ${car.make.toUpperCase()} ${car.model.toUpperCase()}</h4>
-        <p class="card-text">COLOR:${(car.color).toUpperCase()}<br>MILEAGE: ${car.mileage}<br>$${car.price}</p>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-primary create-apt" data-id="${car.id}">Book A Test Drive!</button>
-      </div>
+    `<div class="col-lg-6">
+        <div class="card h-100">
+            <img class="card-img-top" src="${car.image}" alt="">
+            <div class="card-body">
+                <h4 class="card-title">${car.year} ${car.make.toUpperCase()} ${car.model.toUpperCase()}</h4>
+                <p class="card-text">COLOR:${(car.color).toUpperCase()}<br>MILEAGE: ${car.mileage}<br>$${car.price}</p>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary create-apt" data-id="${car.id}">Book A Test Drive!</button>
+            </div>
+        </div>
+        </div>
+        <div class="col-lg-6">
+            <form>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="text" class="form-control" id="date" placeholder="12/10/1997">
+            </div>
+            <div class="form-group">
+                <label for="time">Time</label>
+                <input type="text" class="form-control" id="time" placeholder="12:00pm">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" placeholder="Test drive">
+            </div>
+            <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" class="form-control" id="name" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="text" class="form-control" id="dob" placeholder="12/10/1997">
+            </div>
+        </form>
+        </div>
     </div>
-  </div>`
+    `
 
 }
 

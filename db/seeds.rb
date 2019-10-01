@@ -5,7 +5,9 @@ Car.destroy_all
 
 prius = Car.create(year: 2013, make: "Toyota", model: "Prius", price: 11000, availability: true, mileage: 15000, color: "grey", image: "http://24carshop.com/wp-content/uploads/2017/12/AwesomeAmazingGreat-2009-Acura-MDX-TechEntertainment-Pkg-2009-Acura-MDX-TechEntertainment-Pkg-Formal-Black-SUV-Financing-Available-2017-20182018-201920172018.jpg")
 acura = Car.create(year: 2009, make: "Acura", model: "MDX", price: 11000, availability: true, mileage: 26000, color: "black", image: "https://carcostcanada.com/ResearchPhoto/10263/Gallery_13_toyota_prius_c_00400.jpg")
+flyer = Car.create(year: 1928, make: "Plymouth", model: "Junkerolla", price: 1999999, availability: true, mileage: 999999, color: "pink", image: "https://vignette.wikia.nocookie.net/simpsons/images/8/8a/PinkSedan.png/revision/latest?cb=20180804000113")
 
+hearse = Car.create(year: 2010, make: "Cadillac", model: "Hearse", price: 49000, availability: true, mileage: 5000, color: "blue", image: "https://i.pinimg.com/originals/d8/82/62/d88262b68baf7fcb838551c8d6e273b0.jpg")
 mina = Client.create(name: "Mina", dob: "1/31/1997", email_address: "zermina@fake.com")
 maya = Client.create(name: "Mavia", dob: "09/12/2000", email_address: "maya@fake.com")
 

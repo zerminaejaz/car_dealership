@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2019_10_01_174411) do
   create_table "appointments", force: :cascade do |t|
     t.string "date"
     t.string "time"
-    t.string "status"
     t.string "description"
     t.bigint "car_id", null: false
     t.bigint "client_id", null: false

@@ -5,12 +5,12 @@ class ClientsController < ApplicationController
   def index
     @clients = Client.all
 
-    render json: @clients
+    render json: @clients, include: :appointments
   end
 
   # GET /clients/1
   def show
-    render json: @client
+    render json: @client, include: :appointments
   end
 
   # POST /clients
@@ -27,7 +27,7 @@ class ClientsController < ApplicationController
   # PATCH/PUT /clients/1
   def update
     if @client.update(client_params)
-      render json: @client
+      render json: @client, include: :appointments
     else
       render json: @client.errors, status: :unprocessable_entity
     end

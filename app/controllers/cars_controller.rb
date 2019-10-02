@@ -5,12 +5,12 @@ class CarsController < ApplicationController
   def index
     @cars = Car.all
 
-    render json: @cars
+    render json: @cars, include: :appointments
   end
 
   # GET /cars/1
   def show
-    render json: @car
+    render json: @car, include: :appointments
   end
 
   # POST /cars
@@ -27,7 +27,7 @@ class CarsController < ApplicationController
   # PATCH/PUT /cars/1
   def update
     if @car.update(car_params)
-      render json: @car
+      render json: @car, include: :appointments
     else
       render json: @car.errors, status: :unprocessable_entity
     end

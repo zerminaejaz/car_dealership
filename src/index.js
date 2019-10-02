@@ -51,10 +51,10 @@ function addDataSetToNavBarLinks(clientId){
 }
 ///////////// GRAB CLIENT APPOINTMENTS
 function getClientApts(){
+    clearMainContainer()
     fetch(clientsUrl+`/${clientId}`)
         .then(res=>res.json())
         .then(client=>client.appointments.forEach(apt=>{
-            clearMainContainer()
             // let carName = getCarName(apt.car_id)
             mainContainer.innerHTML +=
             `<div class="col-lg-3 col-md-2 mb-2">
@@ -64,13 +64,14 @@ function getClientApts(){
                         <p class="card-text" align="left">${apt.description}<br>Car:${apt.car_id}</p>
                     </div>
                     <div id="new-user" class="card-footer">
-                        <button data-id="${apt.id}" class="btn btn-primary edit-apt">EDIT</button><br><br>
-                        <button data-id="${apt.id}" class="btn btn-primary delete-apt">DELETE</button>
+                        <button data-id="${apt.id}" class="btn btn-primary" id="edit-apt">EDIT</button><br><br>
+                        <button data-id="${apt.id}" class="btn btn-primary" id="delete-apt">DELETE</button>
                     </div>
                     </div>
                 </div>`
 
         })) 
+    
 }
 
 ///////////// CLIENTS INDEX
@@ -144,9 +145,12 @@ mainContainer.addEventListener("click", function(e){
   
     if(e.target.classList.contains("login")){
         clientId = e.target.dataset.id
+        // localStorage.id = e.target.dataset.id
+       
+       
     
         addDataSetToNavBarLinks(clientId)
-        getClientName(clientId)
+        getClientName(clientId) //switch
         
         clearMainContainer()
         showInventory()
@@ -168,9 +172,9 @@ mainContainer.addEventListener("click", function(e){
             .then(car=>carShow(car))
      
     }
-
-    
-
+    if(e.target.id === "delete-apt"){
+        deleteApt(e.target)
+    }
 })
 
 ///////////// CAR FUNCTIONS 
@@ -178,7 +182,6 @@ mainContainer.addEventListener("click", function(e){
 ///// Car Show
 
 function carShow(car){
-    // <input type="hidden" name="clientId" value="${clientId}"> took this out of the form
     clearAllCars()
     let id = car.id
     mainContainer.innerHTML += 
@@ -197,11 +200,11 @@ function carShow(car){
             <form id="apt-form">
                 <div class="form-group">
                     <label for="date">Date</label>
-                    <input type="text" class="form-control" name="date" placeholder="12/10/1997">
+                    <input type="date" class="form-control" name="date" placeholder="12/10/1997">
                 </div>
                 <div class="form-group">
                     <label for="time">Time</label>
-                    <input type="text" class="form-control" name="time" placeholder="12:00pm">
+                    <input type="time" class="form-control" name="time" placeholder="12:00pm">
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
@@ -217,8 +220,9 @@ function carShow(car){
     
     let form = mainContainer.querySelector("#apt-form")
     form.addEventListener('submit', event => {
+
         event.preventDefault()
-        // debugger
+       
         postApt(event.target)
       })
 
@@ -232,28 +236,44 @@ function clearAllCars(){
 ///////////  APPOINTMENT FUNCTIONS
 
 function postApt(e){
-//     let body = {
-//         date = e.date.value,
-//         time = e.time.value,
-//         description = e.time.value,
-//         carId = e.carId.value,
-//         client_id: clientId
-//     }
+    // debugger
+    let body = {
+        date: e.date.value,
+        time: e.time.value,
+        description: e.description.value,
+        car_id: parseInt(e.carId.value),
+        client_id: parseInt(clientId)
+    }
 
-//     let fetchdata = {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             Accept: "application/json"
-//         },
-//         body: JSON.stringify(body)
-//         }
+    let fetchData = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: "application/json"
+        },
+        body: JSON.stringify(body)
+    }
 
-//     fetch(appointmentsUrl, fetchData)
-//         .then(res => res.json())
-//         .then((obj_toy) => {
-//             console.log
-//             })
+    fetch(appointmentsUrl, fetchData)
+        .then(res => res.json())
+        .then(apt =>getClientApts(clientId)
+            )
 }
 
+function deleteApt(e){
+    let deleteBtn = e
+    let aptId = e.dataset.id
+    let card = e.parentElement.parentElement
+
+    deleteBtn.addEventListener('click', event => {
+        
+        fetch(appointmentsUrl+`/${aptId}`, {
+        method: "DELETE"})
+            .then(res => {
+                card.remove()
+            })
+        
+    })
+
+}
 

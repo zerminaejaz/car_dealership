@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2019_10_01_174411) do
     t.integer "price"
     t.string "color"
     t.integer "mileage"
+    t.string "vin"
     t.boolean "availability"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -14,9 +14,8 @@ fetch(carsUrl)
     }))
 
 function displayCar(car){
-    
     mainContainer.innerHTML += 
-    `<div class="col-lg-3 col-md-6 mb-4">
+    `<div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
           <img class="card-img-top" src="${car.image}" alt="">
           <div class="card-body">
@@ -88,7 +87,7 @@ function carShow(car){
             <img class="card-img-top" src="${car.image}" alt="">
             <div class="card-body">
                 <h4 class="card-title">${car.year} ${car.make.toUpperCase()} ${car.model.toUpperCase()}</h4>
-                <p class="card-text">COLOR:${(car.color).toUpperCase()}<br>MILEAGE: ${car.mileage}<br>$${car.price}</p>
+                <p class="card-text">COLOR:${(car.color).toUpperCase()}<br>VIN#: ${car.vin}<br>MILEAGE: ${car.mileage}<br>$${car.price}</p>
             </div>
             <div class="card-footer">
                 <button class="btn btn-primary create-apt" data-id="${car.id}">Book A Test Drive!</button>

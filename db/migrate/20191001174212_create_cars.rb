@@ -8,6 +8,7 @@ class CreateCars < ActiveRecord::Migration[6.0]
       t.integer :price
       t.string :color
       t.integer :mileage
+      t.string :vin
       t.boolean :availability
 
       t.timestamps

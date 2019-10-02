@@ -261,11 +261,10 @@ function postApt(e){
 }
 
 function deleteApt(e){
-    let deleteBtn = e
+    // let deleteBtn = e
     let aptId = e.dataset.id
     let card = e.parentElement.parentElement
-
-    deleteBtn.addEventListener('click', event => {
+    
         
         fetch(appointmentsUrl+`/${aptId}`, {
         method: "DELETE"})
@@ -273,7 +272,7 @@ function deleteApt(e){
                 card.remove()
             })
         
-    })
+    
 
 }
 

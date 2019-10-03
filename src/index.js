@@ -14,11 +14,19 @@ let createAccountBtn = document.querySelector(".create-account")
 let mainContainer = document.querySelector("#car-posts")
 let navBar = document.querySelector(".navigation")
 let header = document.querySelector(".jumbotron")
+let aptSideBar = document.querySelector("#all-client-apts")
 
 var clientId;
 var clientName;
 var clientDOB;
 var clientEmail;
+
+
+
+//index page
+showHomePage()
+
+///////////////////////////////////////////////////////////////////////////////////
 
 function clearMainContainer(){
     mainContainer.innerHTML = ""
@@ -28,41 +36,6 @@ function insertAfter(el, referenceNode) {
     referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
 
 }
-
-
-//index page
-showHomePage()
-
-/////////////// CAR ACCESSORS ///////////////
-
-///////////// GRAB CAR NAME
-function getCarName(id){
-    let name = 
-        fetch(carsUrl`/${id}`)
-        .then(res=>res.json())
-        .then(car => {car.name})
-    return name;
-}
-
-
-
-/////////////// CLIENT ACCESSORS //////////////////
-
-///////////// GRAB CLIENT NAME
-function putClientNameOnNavBar(){
-    // debugger
-    
-    username.innerText = `${clientName}`
-    username.style.color = "white"
-}
-function getClientInfo(client){
-    clientName = client.name;
-    clientDOB  = client.dob;
-    clientEmail = client.email_address;
-    clientId = client.id //added 1:45
-
-}
-
 
 function addDataSetToNavBarLinks(){
     navUl.innerHTML = `
@@ -81,19 +54,31 @@ function addDataSetToNavBarLinks(){
 
 }
 
-///////////// GRAB CLIENT APPOINTMENTS
-function getClientApts(){
-    clearMainContainer()
-    fetch(clientsUrl+`/${clientId}`)
+
+/////////////// CAR ACCESSORS ///////////////
+
+///////////// GRAB CAR NAME
+function getCarName(id){
+    let name = 
+        fetch(carsUrl`/${id}`)
         .then(res=>res.json())
-        .then(client=>client.appointments.forEach(apt=>{
-            
-            mainContainer.innerHTML +=
+        .then(car => {car.name})
+    return name;
+}
+
+///////////// GRAB CAR IMAGE
+function getClientAptsP2(apt){
+    let image = 
+        fetch(carsUrl+`/${apt.car_id}`)
+        .then(res=>res.json())
+        .then(car => {
+             mainContainer.innerHTML +=
             `<div class="col-lg-3 col-md-2 mb-2">
                     <div class="card h-100" data-id="${clientId}">
+                        <img class="card-img-top" src="${car.image}" alt="">
                     <div class="card-body">
                         <h6 class="card-title">${apt.date}<br>----<br>${apt.time} </h6>
-                        <p class="card-text" align="left">${apt.description}<br>Car:${apt.car_id}</p>
+                        <p class="card-text text-center" align="left">${apt.description}</p>
                     </div>
                     <div id="new-user" class="card-footer">
                         <button data-id="${apt.id}" class="btn btn-primary" id="edit-apt">EDIT</button><br><br>
@@ -101,6 +86,34 @@ function getClientApts(){
                     </div>
                     </div>
                 </div>`
+        })
+    return image;
+}
+
+
+/////////////// CLIENT ACCESSORS //////////////////
+
+///////////// GRAB CLIENT NAME
+function putClientNameOnNavBar(){  
+    username.innerText = `${clientName}`
+    username.style.color = "white"
+}
+function getClientInfo(client){
+    clientName = client.name;
+    clientDOB  = client.dob;
+    clientEmail = client.email_address;
+    clientId = client.id //added 1:45
+
+}
+
+
+///////////// GRAB CLIENT APPOINTMENTS
+function getClientApts(){
+    clearMainContainer()
+    fetch(clientsUrl+`/${clientId}`)
+        .then(res=>res.json())
+        .then(client=>client.appointments.forEach(apt=>{
+            getClientAptsP2(apt)
 
         })) 
 }
@@ -168,7 +181,7 @@ function createAccount(){
               </li>`
             
                 addDataSetToNavBarLinks(clientId)
-                putClientNameOnNavBar() //getClientName(id)
+                putClientNameOnNavBar() 
                 
 
                 clearMainContainer()
@@ -198,7 +211,7 @@ function editAccount(){
                     <label for="email">Email</label>
                     <input type="text" class="form-control" name="email" value ="${clientEmail}" placeholder="${clientEmail}">
                 </div>
-                <input class="submit-apt" type="submit">
+                <input class="btn btn-primary submit-apt" type="submit">
             </form>
         </div>
         <div class="col-lg-4">
@@ -265,13 +278,18 @@ function editAccount(){
 ///////////// CLIENTS INDEX
 
 function showHomePage(){
-    clearMainContainer() 
+    clearMainContainer()
     fetch(clientsUrl)
         .then(res=>res.json())
         .then(clientsArray =>clientsArray.forEach(client => displayClient(client)))
+
 }
 
 function displayClient(client){
+    // aptSideBar.className += "text-center col-lg-6"
+    // displayAptsOnSideBar()
+    // mainContainer.className = "row text-center col-lg-6"
+
     mainContainer.innerHTML +=
     `<div class="col-lg-2 col-md-3 mb-2">
             <div class="card h-100" data-id="${client.id}">

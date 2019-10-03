@@ -24,8 +24,9 @@ mina = Client.create(name: "mina" , dob: "1/31/1997", email_address: "zer@fake.c
 maya = Client.create(name: "Mavia", dob: "09/12/2000", email_address: "maya@fake.com")
 kiki = Client.create(name: "Kiki", dob: "10/26/2003", email_address: "manacakes@fake.com")
 
-mina_appt = Appointment.create(date: "10/23/19" , time: "3:00pm" ,description: "Signing Contract", car: prius, client: mina)
+mina_appt = Appointment.create(date: "10/23/19" , time: "3:00pm" ,description: "Wants to Test Drive", car: prius, client: mina)
 maya_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "Wants to Test Drive acura with Daughter Kim", car: acura, client: maya)
+mina2_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "Signing Contract", car: acura, client: mina)
 
 puts("Seeded!")
 

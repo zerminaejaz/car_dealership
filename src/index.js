@@ -16,6 +16,9 @@ let navBar = document.querySelector(".navigation")
 let header = document.querySelector(".jumbotron")
 
 var clientId;
+var clientName;
+var clientDOB;
+var clientEmail;
 
 function clearMainContainer(){
     mainContainer.innerHTML = ""
@@ -23,7 +26,13 @@ function clearMainContainer(){
 
 function insertAfter(el, referenceNode) {
     referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+
 }
+
+
+//index page
+showHomePage()
+
 /////////////// CAR ACCESSORS ///////////////
 
 ///////////// GRAB CAR NAME
@@ -40,31 +49,36 @@ function getCarName(id){
 /////////////// CLIENT ACCESSORS //////////////////
 
 ///////////// GRAB CLIENT NAME
-function getClientName(id){
-    let name = 
-        fetch(clientsUrl+`/${id}`)
-        .then(res=>res.json())
-        .then(client => {
-            username.innerText = `${client.name}`
-            username.style.color = "white"
-        })
-    return name;
+function putClientNameOnNavBar(){
+    // debugger
+    
+    username.innerText = `${clientName}`
+    username.style.color = "white"
 }
+function getClientInfo(client){
+    clientName = client.name;
+    clientDOB  = client.dob;
+    clientEmail = client.email_address;
+    clientId = client.id //added 1:45
+
+}
+
 
 function addDataSetToNavBarLinks(clientId){
     inventoryLink.dataset.id = clientId
     aptLink.dataset.id = clientId
 }
+
 ///////////// GRAB CLIENT APPOINTMENTS
 function getClientApts(){
     clearMainContainer()
     fetch(clientsUrl+`/${clientId}`)
         .then(res=>res.json())
         .then(client=>client.appointments.forEach(apt=>{
-            // let carName = getCarName(apt.car_id)
+            
             mainContainer.innerHTML +=
             `<div class="col-lg-3 col-md-2 mb-2">
-                    <div class="card h-100" data-id="${client.id}">
+                    <div class="card h-100" data-id="${clientId}">
                     <div class="card-body">
                         <h6 class="card-title">${apt.date}<br>----<br>${apt.time} </h6>
                         <p class="card-text" align="left">${apt.description}<br>Car:${apt.car_id}</p>
@@ -77,14 +91,162 @@ function getClientApts(){
                 </div>`
 
         })) 
+}
+
+///////////// CREATE CLIENT ACCOUNT
+function createAccount(){
+    clearMainContainer()
+    mainContainer.innerHTML = `
+    <div class="col-lg-6">
+            <form id="client-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Micky Xu">
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" class="form-control" name="dob">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="somewhere@fake.com">
+                </div>
+                <input class="submit-apt" type="submit">
+            </form>
+        </div>
+    `
+   let form = mainContainer.querySelector("#client-form")
+   form.addEventListener("submit", function(e){
+        e.preventDefault()
+        clientName = form.name.value,
+        clientDOB = form.dob.value,
+        clientEmail = form.email.value
+    
+       let clientBody = {
+            name : form.name.value,
+            dob : form.dob.value,
+            email_address : form.email.value
+       }
+       let fetchData = {
+           method: "POST",
+           headers: {
+               "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body:JSON.stringify(clientBody) 
+        }
+        fetch(clientsUrl, fetchData)
+            .then(res => res.json())
+            .then(client => {
+                clientId = client.id
+                createAccountBtn.remove()
+              
+                navUl.innerHTML = `
+                <li class="nav-item">
+              <p class="nav-link" id="inventory-link">Inventory</p> 
+            </li>
+            <li class="nav-item" id="apt-link-li">
+              <p class="nav-link" id="apt-link">Appointments</p>
+            </li>
+                <li class="nav-item">
+                  <p class="nav-link" id="edit-account">Edit Account</p>
+                </li>
+                <li class="nav-item">
+                <p class="nav-link" id="logout">Log Out</p>
+              </li>`
+            
+                addDataSetToNavBarLinks(clientId)
+                putClientNameOnNavBar() //getClientName(id)
+                
+
+                clearMainContainer()
+                showInventory()
+    
+            })
+    })
+
+}
+
+///////////// UPDATE CLIENT ACCOUNT
+function editAccount(){
+
+    clearMainContainer()
+    mainContainer.innerHTML = `
+    <div class="col-lg-8">
+            <form id="edit-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name" value ="${clientName}" placeholder="${clientName}">
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="text" class="form-control" name="dob" value ="${clientDOB}" placeholder="${clientDOB}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" name="email" value ="${clientEmail}" placeholder="${clientEmail}">
+                </div>
+                <input class="submit-apt" type="submit">
+            </form>
+        </div>
+        <div class="col-lg-4">
+            <button class="btn btn-primary" id="delete-account-btn">Delete Account</button>
+        </div>
+    `
+    let deleteBtn = mainContainer.querySelector("#delete-account-btn")
+    deleteBtn.addEventListener("click", function(e){
+        let fetchData = {
+            method: "DELETE"
+        }
+        fetch(clientsUrl+`/${clientId}`, fetchData)
+            .then(res=>{
+                debugger
+                showHomePage()
+            })
+
+    }) 
+   let form = mainContainer.querySelector("#edit-form")
+   form.addEventListener("submit", function(e){
+       e.preventDefault()
+       clientName = form.name.value
+       clientDOB = form.dob.value
+       clientEmail = form.email.value
+
+       let clientBody = {
+            name : form.name.value,
+            dob : form.dob.value,
+            email_address : form.email.value
+       }
+       let fetchData = {
+           method: "PATCH",
+           headers: {
+               "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body:JSON.stringify(clientBody) 
+        }
+        fetch(clientsUrl+`/${clientId}`, fetchData)
+            .then(res => res.json())
+            .then(client => {
+                username.innerText = `${name}`
+                clearMainContainer()
+                showInventory()
+    
+            })
+
+            
+    })
     
 }
 
 ///////////// CLIENTS INDEX
 
-fetch(clientsUrl)
-    .then(res=>res.json())
-    .then(clientsArray =>clientsArray.forEach(client => displayClient(client)))
+function showHomePage(){
+    clearMainContainer() //added
+    fetch(clientsUrl)
+        .then(res=>res.json())
+        .then(clientsArray =>clientsArray.forEach(client => displayClient(client)))
+}
 
 function displayClient(client){
     mainContainer.innerHTML +=
@@ -100,7 +262,6 @@ function displayClient(client){
               </div>
             </div>
           </div>`
-
 }
 
 
@@ -140,8 +301,15 @@ navBar.addEventListener("click", function(e){
             .then(res=>res.json())
             .then(clientsArray =>clientsArray.forEach(client => displayClient(client)))
         clientId = null
-
+        header.append(createAccountBtn)
+        
     }
+
+    if(event.target.id === "edit-account"){
+        clearMainContainer()
+        editAccount() 
+    }
+
     if(e.target.id === "inventory-link"){
         clearMainContainer()
         showInventory()
@@ -155,20 +323,13 @@ navBar.addEventListener("click", function(e){
            getClientApts(clientId)
        }
     }
-
 })
 
-// inventoryLink.addEventListener("click", function(e){
-//     clearMainContainer()
-//     showInventory()
-// })
-
-// aptLink.addEventListener("click", function(e){
-//     clearMainContainer()
-//     getClientApts(clientId)
-// })
-
-
+header.addEventListener("click", function(e){
+    if(e.target.classList.contains("create-account")){
+        createAccount()
+    }
+})
 
 
 
@@ -177,16 +338,32 @@ navBar.addEventListener("click", function(e){
 mainContainer.addEventListener("click", function(e){
   
     if(e.target.classList.contains("login")){
+
         clientId = e.target.dataset.id
         createAccountBtn.remove()
-      
-        navUl.innerHTML += `<li class="nav-item">
-        <p class="nav-link" id="logout">Log Out</p>
-      </li>`
+        navUl.innerHTML = `
+                <li class="nav-item">
+              <p class="nav-link" id="inventory-link">Inventory</p> 
+            </li>
+            <li class="nav-item" id="apt-link-li">
+              <p class="nav-link" id="apt-link">Appointments</p>
+            </li>
+                <li class="nav-item">
+                  <p class="nav-link" id="edit-account">Edit Account</p>
+                </li>
+                <li class="nav-item">
+                <p class="nav-link" id="logout">Log Out</p>
+              </li>`
         
     
         addDataSetToNavBarLinks(clientId)
-        getClientName(clientId) //switch
+
+        fetch(clientsUrl+`/${clientId}`)
+            .then(res=>res.json())
+            .then(client => {
+                getClientInfo(client)
+                putClientNameOnNavBar()
+            })
         
         clearMainContainer()
         showInventory()

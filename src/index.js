@@ -286,17 +286,14 @@ function showHomePage(){
 }
 
 function displayClient(client){
-    // aptSideBar.className += "text-center col-lg-6"
-    // displayAptsOnSideBar()
-    // mainContainer.className = "row text-center col-lg-6"
 
     mainContainer.innerHTML +=
-    `<div class="col-lg-2 col-md-3 mb-2">
+    `<div class="col-lg-3 col-md-3 mb-2">
             <div class="card h-100" data-id="${client.id}">
                 <img class="card-img-top" src="https://www.stopford.co.uk/wp-content/uploads/2015/03/Anon-male-768x548.jpg" alt="">
               <div class="card-body">
                 <h4 class="card-title">${(client.name).toUpperCase()}</h4>
-                <p class="card-text">${client.dob}<br>${client.email_address}</p>
+                <p class="card-text">${client.dob}</p>
               </div>
               <div id="new-user" class="card-footer">
                 <button data-id="${client.id}" class="btn btn-primary login">Log In</button>

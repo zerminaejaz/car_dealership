@@ -6,18 +6,24 @@ let appointmentsUrl = "http://localhost:3000/appointments"
 //linktags
 let inventoryLink = document.querySelector("#inventory-link")
 let aptLink = document.querySelector("#apt-link")
+let navUl = document.querySelector("#nav-ul")
 let username = document.querySelector("#username") 
+let createAccountBtn = document.querySelector(".create-account")
 
 //containers
 let mainContainer = document.querySelector("#car-posts")
-let navBar = document.querySelector(".navbar-right")
+let navBar = document.querySelector(".navigation")
 let header = document.querySelector(".jumbotron")
+
 var clientId;
 
 function clearMainContainer(){
     mainContainer.innerHTML = ""
 }
 
+function insertAfter(el, referenceNode) {
+    referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+}
 /////////////// CAR ACCESSORS ///////////////
 
 ///////////// GRAB CAR NAME
@@ -126,16 +132,43 @@ function showInventory(){
 }  
 
 ///////////// NAVBAR LINK LISTENERS
+navBar.addEventListener("click", function(e){
 
-inventoryLink.addEventListener("click", function(e){
-    clearMainContainer()
-    showInventory()
+    if(event.target.id === "logout"){
+        clearMainContainer()
+        fetch(clientsUrl)
+            .then(res=>res.json())
+            .then(clientsArray =>clientsArray.forEach(client => displayClient(client)))
+        clientId = null
+
+    }
+    if(e.target.id === "inventory-link"){
+        clearMainContainer()
+        showInventory()
+    }
+    if(e.target.id === "apt-link"){
+        clearMainContainer()
+        if(!clientId){
+            mainContainer.innerText = "Sign In To View Appointments"
+        }
+       else{
+           getClientApts(clientId)
+       }
+    }
+
 })
 
-aptLink.addEventListener("click", function(e){
-    clearMainContainer()
-    getClientApts(clientId)
-})
+// inventoryLink.addEventListener("click", function(e){
+//     clearMainContainer()
+//     showInventory()
+// })
+
+// aptLink.addEventListener("click", function(e){
+//     clearMainContainer()
+//     getClientApts(clientId)
+// })
+
+
 
 
 
@@ -145,9 +178,12 @@ mainContainer.addEventListener("click", function(e){
   
     if(e.target.classList.contains("login")){
         clientId = e.target.dataset.id
-        // localStorage.id = e.target.dataset.id
-       
-       
+        createAccountBtn.remove()
+      
+        navUl.innerHTML += `<li class="nav-item">
+        <p class="nav-link" id="logout">Log Out</p>
+      </li>`
+        
     
         addDataSetToNavBarLinks(clientId)
         getClientName(clientId) //switch

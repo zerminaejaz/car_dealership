@@ -5,7 +5,7 @@ let appointmentsUrl = "http://localhost:3000/appointments"
 
 //linktags
 let inventoryLink = document.querySelector("#inventory-link")
-let aptLink = document.querySelector("#apt-link")
+// let aptLink = document.querySelector("#apt-link")
 let navUl = document.querySelector("#nav-ul")
 let username = document.querySelector("#username") 
 let createAccountBtn = document.querySelector(".create-account")
@@ -64,9 +64,21 @@ function getClientInfo(client){
 }
 
 
-function addDataSetToNavBarLinks(clientId){
-    inventoryLink.dataset.id = clientId
-    aptLink.dataset.id = clientId
+function addDataSetToNavBarLinks(){
+    navUl.innerHTML = `
+    <li class="nav-item">
+  <p class="nav-link" id="inventory-link">Inventory</p> 
+</li>
+<li class="nav-item" id="apt-link-li">
+  <p class="nav-link" data-id="${clientId}" id="apt-link">Appointments</p>
+</li>
+    <li class="nav-item">
+      <p class="nav-link" id="edit-account">Edit Account</p>
+    </li>
+    <li class="nav-item">
+    <p class="nav-link" data-id="${clientId}" id="logout">Log Out</p>
+  </li>`
+
 }
 
 ///////////// GRAB CLIENT APPOINTMENTS
@@ -193,18 +205,29 @@ function editAccount(){
             <button class="btn btn-primary" id="delete-account-btn">Delete Account</button>
         </div>
     `
+
+    
     let deleteBtn = mainContainer.querySelector("#delete-account-btn")
     deleteBtn.addEventListener("click", function(e){
+   
         let fetchData = {
             method: "DELETE"
         }
-        fetch(clientsUrl+`/${clientId}`, fetchData)
+        fetch(clientsUrl+`/${clientId}`, 
+            fetchData
+        )
             .then(res=>{
-                debugger
+                
                 showHomePage()
+                navUl.innerHTML = `<li class="nav-item">
+                <p class="nav-link" id="inventory-link">Inventory</p> 
+              </li>`
+              username.innerText = ""
+              header.append(createAccountBtn)
             })
 
     }) 
+
    let form = mainContainer.querySelector("#edit-form")
    form.addEventListener("submit", function(e){
        e.preventDefault()
@@ -242,7 +265,7 @@ function editAccount(){
 ///////////// CLIENTS INDEX
 
 function showHomePage(){
-    clearMainContainer() //added
+    clearMainContainer() 
     fetch(clientsUrl)
         .then(res=>res.json())
         .then(clientsArray =>clientsArray.forEach(client => displayClient(client)))

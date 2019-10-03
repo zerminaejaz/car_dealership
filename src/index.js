@@ -264,7 +264,7 @@ function editAccount(){
         fetch(clientsUrl+`/${clientId}`, fetchData)
             .then(res => res.json())
             .then(client => {
-                username.innerText = `${name}`
+                username.innerText = `${client.name}`
                 clearMainContainer()
                 showInventory()
     
@@ -292,7 +292,7 @@ function displayClient(client){
             <div class="card h-100" data-id="${client.id}">
                 <img class="card-img-top" src="https://www.stopford.co.uk/wp-content/uploads/2015/03/Anon-male-768x548.jpg" alt="">
               <div class="card-body">
-                <h4 class="card-title">${(client.name).toUpperCase()}</h4>
+                <h4 id="client-name-${client.id}" class="card-title">${(client.name).toUpperCase()}</h4>
                 <p class="card-text">${client.dob}</p>
               </div>
               <div id="new-user" class="card-footer">
@@ -300,6 +300,7 @@ function displayClient(client){
               </div>
             </div>
           </div>`
+
 }
 
 
@@ -316,7 +317,7 @@ function showInventory(){
         mainContainer.innerHTML += 
         `<div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-            <img class="card-img-top" src="${car.image}" alt="">
+            <img class="card-img-top car-show" src="${car.image}" alt="">
             <div class="card-body">
                 <h4 class="card-title">${car.year} ${car.make.toUpperCase()} ${car.model.toUpperCase()}</h4>
                 <p class="card-text">COLOR:${(car.color).toUpperCase()}<br>MILEAGE: ${car.mileage}<br>$${car.price}</p>
@@ -374,6 +375,7 @@ header.addEventListener("click", function(e){
 ///////////// MAIN CONTAINER LISTENERS
 
 mainContainer.addEventListener("click", function(e){
+
   
     if(e.target.classList.contains("login")){
 
@@ -512,7 +514,6 @@ function postApt(e){
 }
 
 function deleteApt(e){
-    // let deleteBtn = e
     let aptId = e.dataset.id
     let card = e.parentElement.parentElement
     

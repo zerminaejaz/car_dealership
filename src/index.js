@@ -21,9 +21,22 @@ var clientName;
 var clientDOB;
 var clientEmail;
 
-// let profileArray = [
-
-// ]
+let profileArray = ["https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg",
+"https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg",
+"https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1",
+"https://s3.amazonaws.com/aspph-wp-production/app/uploads/2017/03/Ans-.jpg",
+"https://img.kpopmap.com/2017/11/43434h34h43h.jpg",
+"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5saV35FJkzl9DdviWCwK8YwMSOn9su6Ly4NgaVxCffRSP--rsOw",
+"https://d1ung6i9j8i9xc.cloudfront.net/wp-content/blogs.dir/123/files/2019/08/assets1908120039-300x200.jpg",
+"https://cdn.vox-cdn.com/thumbor/wI3iu8sNbFJSQB4yMLsoPMNzIHU=/0x0:3368x3368/1200x800/filters:focal(1188x715:1726x1253)/cdn.vox-cdn.com/uploads/chorus_image/image/62994726/AJ_Finn_author_photo_color_photo_courtesy_of_the_author.0.jpg",
+"https://www.templatebeats.com/files/images/profile_user.jpg",
+"http://www.mixconsultancy.com/wp-content/uploads/2019/02/Loarridge-Henry_sm-300x300.jpg",
+"https://uploads.disquscdn.com/images/71211b1693e144d78a1984485ae01d511183bbed38385cff2e3c45f62d7b4fca.png?w=800&h=783",
+"https://img.kpopmap.com/2018/08/jo-woori-profile-cover.jpg",
+"https://premierleague-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/man279.png",
+"http://gemhpb.com/wp-content/uploads/2014/05/1.png",
+"https://img.kpopmap.com/2018/05/park-seojoon-profile-COVER-final.jpg"
+]
 
 
 
@@ -290,11 +303,11 @@ function showHomePage(){
 }
 
 function displayClient(client){
-
+    // debugger
     mainContainer.innerHTML +=
-    `<div class="col-lg-2 col-md-3 mb-2">
+    `<div class="col-lg-3 col-md-3 mb-2">
             <div class="card h-100 " data-id="${client.id}">
-                <img class="card-img-top" src="https://www.stopford.co.uk/wp-content/uploads/2015/03/Anon-male-768x548.jpg" alt=""">
+                <img class="card-img-top" src="${profileArray[Math.floor(Math.random()*profileArray.length)]}">
               <div class="card-body">
                 <h4 id="client-name-${client.id}" class="card-title">${(client.name).toUpperCase()}</h4>
                 <p class="card-text">${client.dob}</p>
@@ -528,8 +541,5 @@ function deleteApt(e){
             .then(res => {
                 card.remove()
             })
-        
-    
-
 }
 

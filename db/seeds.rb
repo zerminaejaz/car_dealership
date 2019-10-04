@@ -31,8 +31,12 @@ maya_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "W
 mina2_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "Signing Contract", car: acura, client: mina)
 
 30.times do
-    car = Car.create(vin: Faker::Vehicle.vin,year: Faker::Vehicle.year, make: Faker::Vehicle.make, model: Faker::Vehicle.model, price: Faker::Commerce.price(range: 30000..100000, as_string: true), availability: true, mileage: Faker::Vehicle.mileage, color: Faker::Vehicle.color, image: carArray.sample)
-    car2 = Car.create(vin: Faker::Vehicle.vin,year: Faker::Vehicle.year, make: Faker::Vehicle.make, model: Faker::Vehicle.model, price: Faker::Commerce.price(range: 30000..100000, as_string: true), availability: true, mileage: Faker::Vehicle.mileage, color: Faker::Vehicle.color, image: carArray.sample)
+    makeModel = Faker::Vehicle.make_and_model #=> "Honda CR-V"
+    array = makeModel.split(" ")
+    make = array[0]
+    model = array[1]
+    car = Car.create(vin: Faker::Vehicle.vin,year: Faker::Vehicle.year, make: make, model: model, price: Faker::Commerce.price(range: 30000..100000, as_string: true), availability: true, mileage: Faker::Vehicle.mileage, color: Faker::Vehicle.color, image: carArray.sample)
+    car2 = Car.create(vin: Faker::Vehicle.vin,year: Faker::Vehicle.year, make: make, model: model, price: Faker::Commerce.price(range: 30000..100000, as_string: true), availability: true, mileage: Faker::Vehicle.mileage, color: Faker::Vehicle.color, image: carArray.sample)
     client = Client.create(name: Faker::Name.name , dob: Faker::Date.birthday, email_address: Faker::Internet.email)
     
     4.times do

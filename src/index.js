@@ -21,6 +21,10 @@ var clientName;
 var clientDOB;
 var clientEmail;
 
+// let profileArray = [
+
+// ]
+
 
 
 //index page
@@ -81,8 +85,8 @@ function getClientAptsP2(apt){
                         <p class="card-text text-center" align="left">${apt.description}</p>
                     </div>
                     <div id="new-user" class="card-footer">
-                        <button data-id="${apt.id}" class="btn btn-primary" id="edit-apt">EDIT</button><br><br>
-                        <button data-id="${apt.id}" class="btn btn-primary" id="delete-apt">DELETE</button>
+                        <button data-id="${apt.id}" class="btn btn-danger" id="edit-apt">EDIT</button><br><br>
+                        <button data-id="${apt.id}" class="btn btn-danger" id="delete-apt">DELETE</button>
                     </div>
                     </div>
                 </div>`
@@ -211,11 +215,11 @@ function editAccount(){
                     <label for="email">Email</label>
                     <input type="text" class="form-control" name="email" value ="${clientEmail}" placeholder="${clientEmail}">
                 </div>
-                <input class="btn btn-primary submit-apt" type="submit">
+                <input class="btn btn-danger submit-apt" type="submit">
             </form>
         </div>
         <div class="col-lg-4">
-            <button class="btn btn-primary" id="delete-account-btn">Delete Account</button>
+            <button class="btn btn-danger" id="delete-account-btn">Delete Account</button>
         </div>
     `
 
@@ -288,15 +292,15 @@ function showHomePage(){
 function displayClient(client){
 
     mainContainer.innerHTML +=
-    `<div class="col-lg-3 col-md-3 mb-2">
-            <div class="card h-100" data-id="${client.id}">
+    `<div class="col-lg-2 col-md-3 mb-2">
+            <div class="card h-100 " data-id="${client.id}">
                 <img class="card-img-top" src="https://www.stopford.co.uk/wp-content/uploads/2015/03/Anon-male-768x548.jpg" alt=""">
               <div class="card-body">
                 <h4 id="client-name-${client.id}" class="card-title">${(client.name).toUpperCase()}</h4>
                 <p class="card-text">${client.dob}</p>
               </div>
               <div id="new-user" class="card-footer">
-                <button data-id="${client.id}" class="btn btn-primary login">Log In</button>
+                <button data-id="${client.id}" class="btn btn-danger login">Log In</button>
               </div>
             </div>
           </div>`
@@ -315,15 +319,15 @@ function showInventory(){
     
     function displayCar(car){
         mainContainer.innerHTML += 
-        `<div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-            <img class="card-img-top car-show" src="${car.image}" alt="">
+        `<div class="col-lg-3 col-md-3 mb-3">
+            <div class="card cardbox h-100">
+            <img class="card-img-top car-show" data-id="${car.id}" src="${car.image}" alt="">
             <div class="card-body">
                 <h4 class="card-title">${car.year} ${car.make.toUpperCase()} ${car.model.toUpperCase()}</h4>
                 <p class="card-text">COLOR:${(car.color).toUpperCase()}<br>MILEAGE: ${car.mileage}<br>$${car.price}</p>
             </div>
             <div class="card-footer">
-                <button class="btn btn-primary car-show" data-id="${car.id}">Find Out More!</button>
+                <button class="btn btn-danger car-show" data-id="${car.id}">Find Out More!</button>
             </div>
             </div>
         </div>`
@@ -418,6 +422,7 @@ mainContainer.addEventListener("click", function(e){
     }
    
     if(e.target.classList.contains('car-show')){
+
         let id = parseInt(e.target.dataset.id)
       
         fetch(`http://localhost:3000/cars/${id}`)

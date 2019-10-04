@@ -17,18 +17,18 @@ carArray = [
     "https://pictures.dealer.com/t/toyotaraleigh/0133/5cac5fcb7bc0325c1fca8156e200d55cx.jpg?impolicy=resize&w=640"
 ]
 
-prius = Car.create(vin: Faker::Vehicle.unique.vin,year: 2013, make: "Toyota", model: "Prius", price: 11000, availability: true, mileage: 15000, color: "grey", image: "http://24carshop.com/wp-content/uploads/2017/12/AwesomeAmazingGreat-2009-Acura-MDX-TechEntertainment-Pkg-2009-Acura-MDX-TechEntertainment-Pkg-Formal-Black-SUV-Financing-Available-2017-20182018-201920172018.jpg")
-acura = Car.create(vin: Faker::Vehicle.vin, year: 2009, make: "Acura", model: "MDX", price: 11000, availability: true, mileage: 26000, color: "black", image: "https://carcostcanada.com/ResearchPhoto/10263/Gallery_13_toyota_prius_c_00400.jpg")
+# prius = Car.create(vin: Faker::Vehicle.unique.vin,year: 2013, make: "Toyota", model: "Prius", price: 11000, availability: true, mileage: 15000, color: "grey", image: "http://24carshop.com/wp-content/uploads/2017/12/AwesomeAmazingGreat-2009-Acura-MDX-TechEntertainment-Pkg-2009-Acura-MDX-TechEntertainment-Pkg-Formal-Black-SUV-Financing-Available-2017-20182018-201920172018.jpg")
+# acura = Car.create(vin: Faker::Vehicle.vin, year: 2009, make: "Acura", model: "MDX", price: 11000, availability: true, mileage: 26000, color: "black", image: "https://carcostcanada.com/ResearchPhoto/10263/Gallery_13_toyota_prius_c_00400.jpg")
 
-mina = Client.create(name: "mina" , dob: "1997-01-31", email_address: "zer@fake.com")
-maya = Client.create(name: "Mavia", dob: "2000-09-12", email_address: "maya@fake.com")
-kiki = Client.create(name: "Kiki", dob: "2003-26-10", email_address: "manacakes@fake.com")
+# mina = Client.create(name: "mina" , dob: "1997-01-31", email_address: "zer@fake.com")
+# maya = Client.create(name: "Mavia", dob: "2000-09-12", email_address: "maya@fake.com")
+# kiki = Client.create(name: "Kiki", dob: "2003-26-10", email_address: "manacakes@fake.com")
 
-mina_appt = Appointment.create(date: "10/23/19" , time: "3:00pm" ,description: "Wants to Test Drive", car: prius, client: mina)
-maya_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "Wants to Test Drive acura with Daughter Kim", car: acura, client: maya)
-mina2_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "Signing Contract", car: acura, client: mina)
+# mina_appt = Appointment.create(date: "10/23/19" , time: "3:00pm" ,description: "Wants to Test Drive", car: prius, client: mina)
+# maya_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "Wants to Test Drive acura with Daughter Kim", car: acura, client: maya)
+# mina2_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "Signing Contract", car: acura, client: mina)
 
-30.times do
+40.times do
     makeModel = Faker::Vehicle.make_and_model #=> "Honda CR-V"
     array = makeModel.split(" ")
     make = array[0]
@@ -37,7 +37,7 @@ mina2_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "
     car2 = Car.create(vin: Faker::Vehicle.vin,year: Faker::Vehicle.year, make: make, model: model, price: Faker::Commerce.price(range: 30000..100000, as_string: true), availability: true, mileage: Faker::Vehicle.mileage, color: Faker::Vehicle.color, image: carArray.sample)
     client = Client.create(name: Faker::Name.name , dob: Faker::Date.birthday, email_address: Faker::Internet.email)
     
-    4.times do
+    2.times do
         appt = Appointment.create(date: Faker::Date.between(from: 50.days.ago, to: Date.today), time: "11:00am", description: "Signing Contract", car: car, client: client)
         appt2 = Appointment.create(date: Faker::Date.between(from: 50.days.ago, to: Date.today), time: "3:30pm", description: "Test Drive", car: car2, client: client)
     end

@@ -35,7 +35,11 @@ let profileArray = ["https://www.rd.com/wp-content/uploads/2017/09/01-shuttersto
 "https://img.kpopmap.com/2018/08/jo-woori-profile-cover.jpg",
 "https://premierleague-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/man279.png",
 "http://gemhpb.com/wp-content/uploads/2014/05/1.png",
-"https://img.kpopmap.com/2018/05/park-seojoon-profile-COVER-final.jpg"
+"https://img.kpopmap.com/2018/05/park-seojoon-profile-COVER-final.jpg",
+"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSOHBYH5MlqZjhBsNIZTm66VE7nCfsyuat9wUEi8wIgzlbVJ2E",
+"https://vicepresidentofindia.nic.in/sites/default/files/vp_india_naidu.jpg",
+"https://static1.squarespace.com/static/54f74f23e4b0952b4e0011c0/54f9cb03e4b0d8458d5fcbc7/5ad540ad575d1f25327874b9/1523959227082/AmandaMinicucci.jpg?format=1000w",
+"https://content.linkedin.com/content/dam/business/talent-solutions/global/en_us/blog/2019/07/linkedin-profile-summaries-hero-v2.jpg"
 ]
 
 
@@ -113,7 +117,7 @@ function getClientAptsP2(apt){
 ///////////// GRAB CLIENT NAME
 function putClientNameOnNavBar(){  
     username.innerText = `${clientName}`
-    username.style.color = "white"
+    username.style.color = "red"
 }
 function getClientInfo(client){
     clientName = client.name;
@@ -412,6 +416,7 @@ mainContainer.addEventListener("click", function(e){
                 <p class="nav-link" id="logout">Log Out</p>
               </li>`
         
+        
     
         addDataSetToNavBarLinks(clientId)
 
@@ -437,7 +442,8 @@ mainContainer.addEventListener("click", function(e){
     if(e.target.classList.contains('car-show')){
 
         let id = parseInt(e.target.dataset.id)
-      
+        header.remove()
+        
         fetch(`http://localhost:3000/cars/${id}`)
             .then(res=>res.json())
             .then(car=>carShow(car))
@@ -469,6 +475,7 @@ function carShow(car){
         </div>
         <div class="col-lg-6">
             <form id="apt-form">
+            <img height="200" width="200" src="http://okhlaford.com/images/loader.gif">
                 <div class="form-group">
                     <label for="date">Date</label>
                     <input type="date" class="form-control" name="date" placeholder="12/10/1997">
@@ -533,7 +540,9 @@ function postApt(e){
 
 function deleteApt(e){
     let aptId = e.dataset.id
-    let card = e.parentElement.parentElement
+    let card = e.parentElement.parentElement.parentElement
+    //fix line above for efficiency
+   
     
         
         fetch(appointmentsUrl+`/${aptId}`, {

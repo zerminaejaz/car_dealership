@@ -290,7 +290,7 @@ function displayClient(client){
     mainContainer.innerHTML +=
     `<div class="col-lg-3 col-md-3 mb-2">
             <div class="card h-100" data-id="${client.id}">
-                <img class="card-img-top" src="https://www.stopford.co.uk/wp-content/uploads/2015/03/Anon-male-768x548.jpg" alt="">
+                <img class="card-img-top" src="https://www.stopford.co.uk/wp-content/uploads/2015/03/Anon-male-768x548.jpg" alt=""">
               <div class="card-body">
                 <h4 id="client-name-${client.id}" class="card-title">${(client.name).toUpperCase()}</h4>
                 <p class="card-text">${client.dob}</p>

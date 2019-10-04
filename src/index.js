@@ -34,7 +34,6 @@ let profileArray = ["https://www.rd.com/wp-content/uploads/2017/09/01-shuttersto
 "https://uploads.disquscdn.com/images/71211b1693e144d78a1984485ae01d511183bbed38385cff2e3c45f62d7b4fca.png?w=800&h=783",
 "https://img.kpopmap.com/2018/08/jo-woori-profile-cover.jpg",
 "https://premierleague-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/man279.png",
-"http://gemhpb.com/wp-content/uploads/2014/05/1.png",
 "https://img.kpopmap.com/2018/05/park-seojoon-profile-COVER-final.jpg",
 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSOHBYH5MlqZjhBsNIZTm66VE7nCfsyuat9wUEi8wIgzlbVJ2E",
 "https://vicepresidentofindia.nic.in/sites/default/files/vp_india_naidu.jpg",

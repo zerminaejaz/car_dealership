@@ -92,9 +92,11 @@ function getClientAptsP2(apt){
     let image = 
         fetch(carsUrl+`/${apt.car_id}`)
         .then(res=>res.json())
+
+        //added class to div 
         .then(car => {
              mainContainer.innerHTML +=
-            `<div class="col-lg-3 col-md-2 mb-2">
+            `<div class="col-lg-3 col-md-2 mb-2 apt-div-${apt.id}">
                     <div class="card h-100" data-id="${clientId}">
                         <img class="card-img-top" src="${car.image}" alt="">
                     <div class="card-body">
@@ -540,11 +542,8 @@ function postApt(e){
 
 function deleteApt(e){
     let aptId = e.dataset.id
-    let card = e.parentElement.parentElement.parentElement
-    //fix line above for efficiency
-   
-    
-        
+    let card = document.querySelector(`.apt-div-${aptId}`)
+  
         fetch(appointmentsUrl+`/${aptId}`, {
         method: "DELETE"})
             .then(res => {

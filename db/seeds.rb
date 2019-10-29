@@ -14,32 +14,29 @@ carArray = [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT777-OnOIn3JOXWt22C2GEVg6LseMxdVfqUOBQL1PJO2d3zay7tQ",
     "https://cnet2.cbsistatic.com/img/bh3_El_2WoAjQ_0jxFEJkTu84sQ=/1092x0/2015/09/04/4764b360-c781-42ef-a6e9-d6cd16962e29/09-2016jaguarxfpaukert.jpg",
     "https://images.drivetime.com/stockitems/1630015400/aa23dc4e-7e07-437e-8dee-0c64833c273a_Medium.jpg",
-    "https://pictures.dealer.com/t/toyotaraleigh/0133/5cac5fcb7bc0325c1fca8156e200d55cx.jpg?impolicy=resize&w=640"
+    "https://pictures.dealer.com/t/toyotaraleigh/0133/5cac5fcb7bc0325c1fca8156e200d55cx.jpg?impolicy=resize&w=640",
+    "https://previews.123rf.com/images/anetlanda/anetlanda1710/anetlanda171001369/88113746-closeup-old-rotten-piece-of-lemon-bad-unhealthy-food.jpg"
 ]
 
-# prius = Car.create(vin: Faker::Vehicle.unique.vin,year: 2013, make: "Toyota", model: "Prius", price: 11000, availability: true, mileage: 15000, color: "grey", image: "http://24carshop.com/wp-content/uploads/2017/12/AwesomeAmazingGreat-2009-Acura-MDX-TechEntertainment-Pkg-2009-Acura-MDX-TechEntertainment-Pkg-Formal-Black-SUV-Financing-Available-2017-20182018-201920172018.jpg")
-# acura = Car.create(vin: Faker::Vehicle.vin, year: 2009, make: "Acura", model: "MDX", price: 11000, availability: true, mileage: 26000, color: "black", image: "https://carcostcanada.com/ResearchPhoto/10263/Gallery_13_toyota_prius_c_00400.jpg")
-
-# mina = Client.create(name: "mina" , dob: "1997-01-31", email_address: "zer@fake.com")
-# maya = Client.create(name: "Mavia", dob: "2000-09-12", email_address: "maya@fake.com")
-# kiki = Client.create(name: "Kiki", dob: "2003-26-10", email_address: "manacakes@fake.com")
-
-# mina_appt = Appointment.create(date: "10/23/19" , time: "3:00pm" ,description: "Wants to Test Drive", car: prius, client: mina)
-# maya_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "Wants to Test Drive acura with Daughter Kim", car: acura, client: maya)
-# mina2_appt = Appointment.create(date: "3/25/19", time: "11:00am", description: "Signing Contract", car: acura, client: mina)
 
 40.times do
     makeModel = Faker::Vehicle.make_and_model #=> "Honda CR-V"
     array = makeModel.split(" ")
     make = array[0]
     model = array[1]
-    car = Car.create(vin: Faker::Vehicle.vin,year: Faker::Vehicle.year, make: make, model: model, price: Faker::Commerce.price(range: 30000..100000, as_string: true), availability: true, mileage: Faker::Vehicle.mileage, color: Faker::Vehicle.color, image: carArray.sample)
-    car2 = Car.create(vin: Faker::Vehicle.vin,year: Faker::Vehicle.year, make: make, model: model, price: Faker::Commerce.price(range: 30000..100000, as_string: true), availability: true, mileage: Faker::Vehicle.mileage, color: Faker::Vehicle.color, image: carArray.sample)
+    car = Car.create(vin: Faker::Vehicle.vin,year: Faker::Vehicle.year, make: make, model: model, 
+            price: Faker::Commerce.price(range: 30000..100000, as_string: true), 
+            availability: true, mileage: Faker::Vehicle.mileage, color: Faker::Vehicle.color, image: carArray.sample)
+    car2 = Car.create(vin: Faker::Vehicle.vin,year: Faker::Vehicle.year, 
+            make: make, model: model, price: Faker::Commerce.price(range: 30000..100000, as_string: true), 
+            availability: true, mileage: Faker::Vehicle.mileage, color: Faker::Vehicle.color, image: carArray.sample)
     client = Client.create(name: Faker::Name.name , dob: Faker::Date.birthday, email_address: Faker::Internet.email)
     
     2.times do
-        appt = Appointment.create(date: Faker::Date.between(from: 50.days.ago, to: Date.today), time: "11:00am", description: "Signing Contract", car: car, client: client)
-        appt2 = Appointment.create(date: Faker::Date.between(from: 50.days.ago, to: Date.today), time: "3:30pm", description: "Test Drive", car: car2, client: client)
+        appt = Appointment.create(date: Faker::Date.between(from: 50.days.ago, to: Date.today), time: "11:00am", 
+                description: "Signing Contract", car: car, client: client)
+        appt2 = Appointment.create(date: Faker::Date.between(from: 50.days.ago, to: Date.today), time: "3:30pm", 
+                description: "Test Drive", car: car2, client: client)
     end
 
 end

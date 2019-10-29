@@ -443,7 +443,7 @@ mainContainer.addEventListener("click", function(e){
     if(e.target.classList.contains('car-show')){
 
         let id = parseInt(e.target.dataset.id)
-        header.remove()
+        // header.remove()
         
         fetch(`http://localhost:3000/cars/${id}`)
             .then(res=>res.json())

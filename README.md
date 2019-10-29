@@ -1,24 +1,4 @@
-# README
+Customer can view the dealership's used car inventory, book an appointment to test drive vehicles, and edit/delete their user accounts. 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
++ Used Ruby on Rails and Postgresql to store the inventory of cars, users and their appointments
++ Used JavaScript with Bootstrap, and HTML/CSS to create a smooth, dynamic frontend user experience

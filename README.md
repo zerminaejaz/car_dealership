@@ -30,10 +30,7 @@ rails s
 
 # Screenshots
 
-## Demo
-
-![Demo](./public/pull_over_login.gif)
-
+## Demo to be added...
 
 
 ## Contributing

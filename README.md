@@ -22,6 +22,7 @@ An application where customers can view dealership’s used car inventory, book 
 ## Installation
 
 ```
+bundle install
 rails s
 ```
 
